@@ -1,9 +1,8 @@
 import { types } from "mobx-state-tree";
 
 const data = {
-  name: "book",
-  price: 28.00,
-  image: "url"
+  name: "Chronicles of Narnia Box Set - C.S. Lewis",
+  price: 28.73
 }
 
 export const WishListItem = types.model({

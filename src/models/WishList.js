@@ -34,7 +34,7 @@ export const WishList = types.model({
   .views(self => ({
     // Computed properties...
     get totalPrice() {
-      return self.items.reduce((sum, entry) => sum + entry, 0);
+      return self.items.reduce((sum, entry) => sum + entry.price, 0);
     }
   }));
 

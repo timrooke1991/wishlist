@@ -1,10 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './assets/index.css';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./assets/index.css";
+import App from "./components/App";
 
-import App from './App';
-import { WishList } from './models/WishList';
-import { onSnapshot } from 'mobx-state-tree';
+import { getSnapshot } from "mobx-state-tree";
+
+import { WishList } from "./models/WishList";
 
 let initialState = {
   items: [
@@ -20,23 +21,26 @@ let initialState = {
         "https://images-na.ssl-images-amazon.com/images/I/51a7xaMpneL._SX329_BO1,204,203,200_.jpg"
     }
   ]
+};
+
+let wishList = WishList.create(initialState);
+
+function renderApp() {
+  ReactDOM.render(<App wishList={wishList} />, document.getElementById("root"));
 }
 
-if (localStorage.getItem('wishlistApp')) {
-  const appJson = JSON.parse(localStorage.getItem('wishlistApp'));
-  if (WishList.is(appJson)) {
-    initialState = appJson
-  }
+renderApp();
+
+if (module.hot) {
+  module.hot.accept(["./components/App"], () => {
+    // new components
+    renderApp();
+  });
+
+  module.hot.accept(["./models/WishList"], () => {
+    // new model definitions
+    const snapshot = getSnapshot(wishList);
+    wishList = WishList.create(snapshot);
+    renderApp();
+  });
 }
-
-const wishList = WishList.create(initialState);
-
-onSnapshot(wishList, snapshot => {
-  localStorage.setItem('wishlistApp', JSON.stringify(snapshot));
-})
-
-ReactDOM.render(<App wishList={wishList} />, document.getElementById("root"));
-
-setInterval(() => {
-  wishList.items[0].changePrice(wishList.items[0].price + 1);
-}, 1000)

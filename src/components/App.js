@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import logo from "./assets/santa-claus.png";
+import logo from "../assets/santa-claus.png";
 
-import WishListView from "./components/WishListView";
+import WishListView from "./WishListView";
 
 class App extends Component {
   render() {

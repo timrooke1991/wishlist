@@ -1,10 +1,5 @@
 import { types, getParent, destroy } from "mobx-state-tree";
 
-const data = {
-  name: "Chronicles of Narnia Box Set - C.S. Lewis",
-  price: 28.73
-}
-
 export const WishListItem = types.model({
   name: types.string,
   price: types.number,
